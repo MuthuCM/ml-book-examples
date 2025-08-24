@@ -15,7 +15,7 @@ x=df_final.drop ("expenses", axis=1).values
 from sklearn.linear_model import LinearRegression
 regressor = LinearRegression( )
 regressor.fit(X,Y)
-Y_hat = regressor.predict(X)
+y_hat = regressor.predict(X)
 print (r2_score(y, y_hat)) #0.75
 
 # Fitting the Model using OLS method
@@ -30,7 +30,7 @@ df_final ['bmi30_smoker'] = (df_final['bmi'] >=30)* df_final.smoker_yes
 
 # Defining Independent Variables & Dependent Variable again
 X = df_final [['age', 'age2', 'children', 'bmi', 'sex_male',
-			   'bmi_30', 'smoker_yes', 'region_northwest',
+			   'bmi30', 'smoker_yes', 'region_northwest',
 			   'region_southeast', 'region_southwest', 
 			   'bmi30_smoker']].values
 Y = df_final ["expenses"].values
@@ -40,4 +40,5 @@ regressor = LinearRegression( )
 regressor.fit (X,Y)
 y_hat = regressor.predict (X)
 
-print(r2_score (Y,Y_hat)) # 0.87
+print(r2_score (Y,y_hat)) # 0.87
+
