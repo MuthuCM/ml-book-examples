@@ -1,10 +1,11 @@
 # Predicting the variety of a flower
 # Load Pandas Package
 import pandas as pd
+import seaborn as sns
 
 # Load Data
-df = pd.read_csv('Iris.csv')
-df.drop(df.columns[[5, ,6,7,8]], axis=1, inplace = True)
+df = pd.read_csv('iris.csv')
+df.drop(df.columns[[5,6,7,8]], axis=1, inplace = True)
 df.head( )
 # df.info( )
 # df.describe( )
@@ -26,7 +27,7 @@ Y = df['iris']
 
 # Fit Logistic Regression Model
 from sklearn.linear_model import LogisticRegression
-classifier = LogisticRegression
+classifier = LogisticRegression()
 classifier.fit(X, y)
 
 # Display the Confusion Matrix
