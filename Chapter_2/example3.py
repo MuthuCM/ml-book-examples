@@ -19,8 +19,7 @@ intercept = lr.intercept_
 print(f"Regression Coefficient =  {regression_coefficient:5.2f} ")
 print(f"Intercept = { intercept : 5.2f}" )
 print()
-print(f"Regression Equation is: Y = {regression_coefficient:5.2f} X  
-                                             + { intercept : 5.2f}")
+print(f"Regression Equation is: Y = {regression_coefficient:5.2f} X  + { intercept : 5.2f}")
 print()
 # Calculate Accuracy Score
 Y_pred = lr.predict(X)
@@ -30,7 +29,7 @@ print()
 # Do Prediction
 testInput = [7,9,3]
 testInput = np.array (testInput)
-	testInput = testInput.reshape (-1,1)
+testInput = testInput.reshape (-1,1)
 predictedValues = regressor.predict(testInput)
 print (predictedValues)
 # Visualize the Regression Line
@@ -39,29 +38,28 @@ plt.plot(X,lr.predict(X), color = 'blue')
 plt.show()
 
 # Install Gradio Library
-# ! pip install gradio -q
-Import gradio as gr
+! pip install gradio -q
+import gradio as gr
 # Define function to predict salary
 def predict_salary(prompt):
-    	    model = 'Salary Prediction'   # Replace with the desired model name
-      	    input_value = int(prompt)
-    	    input_value = np.array([input_value]).reshape(-1, 1)    
-    	    predictedValue = regressor.predict(input_value)    
-    	    salary = int(predictedValue[0])    
-    	    return salary
+  model = 'Salary Prediction'   # Replace with the desired model name
+  input_value = int(prompt)
+  input_value = np.array([input_value]).reshape(-1, 1)    
+  predictedValue = regressor.predict(input_value)    
+  salary = int(predictedValue[0])    
+  return salary
 # Create Gradio interface
 with gr.Blocks() as SalaryPredictor:
-    	 gr.Markdown("## Salary Predictor")
-   	 prompt_input = gr.Textbox(label="Enter your Years of Experience",  
-                                                    placeholder="e.g. 11")
-    	 style_input = gr.Dropdown(cho ices=["watercolor", "photorealistic",
+  gr.Markdown("## Salary Predictor")
+  prompt_input = gr.Textbox(label="Enter your Years of Experience", placeholder="e.g. 11")
+  style_input = gr.Dropdown(choices=["watercolor", "photorealistic",
                                         "no style", "enhance", "anime"],
                                         label="Choose a style"
                                        )
-    	 output_value = gr.Textbox(label="Predicted Salary")
-    	 generate_btn = gr.Button("Predict Salary")
-    	 # Set the function to be called on button click
-    	 generate_btn.click(fn=predict_salary,inputs=[prompt_input],  
-                                            outputs=output_value)
-     # Launch the Gradio interface
-	 SalaryPredictor.launch()
+  output_value = gr.Textbox(label="Predicted Salary")
+  generate_btn = gr.Button("Predict Salary")
+  # Set the function to be called on button click
+  generate_btn.click(fn=predict_salary,inputs=[prompt_input], outputs=output_value)
+
+  # Launch the Gradio interface
+  SalaryPredictor.launch()
