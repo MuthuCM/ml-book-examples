@@ -30,22 +30,22 @@ predictedValues = classifier.predict(X)
 print(predictedValues)
 
 # Install Gradio Library
-# !pip install gradio -q
+!pip install gradio -q
 import gradio as gr
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 # Define function to predict salary
 def predict_preference(prompt):
-    model = 'Preference Prediction'     
-    input_value = int(prompt)
-    input_value = np.array([input_value]).reshape(-1, 1) 
-    input_value = sc.transform(input_value)   
-    predictedValue = classifier.predict(input_value)    
-    preference = int(predictedValue[0])    
-    return preference
+  model = 'Preference Prediction'     
+  input_value = int(prompt)
+  input_value = np.array([input_value]).reshape(-1, 1) 
+  input_value = sc.transform(input_value)   
+  predictedValue = classifier.predict(input_value)    
+  preference = int(predictedValue[0])    
+  return preference
 # Create Gradio interface
 with gr.Blocks() as PreferencePredictor:
-    gr.Markdown("## Preference Predictor")
+	gr.Markdown("## Preference Predictor")
    	prompt_input = gr.Textbox(label="Enter Your Salary", placeholder = "e.g. 100000")
 	style_input = gr.Dropdown(choices =["watercolor", "photorealistic"],label = "Choose a style" )
     output_value = gr.Textbox(label="Predicted Preference")
@@ -53,7 +53,7 @@ with gr.Blocks() as PreferencePredictor:
     sc = StandardScaler()
     sc.fit(X)
     # Set the function to be called on button click
-    generate_btn.click(fn = predict_salary,inputs = [prompt_input],  
+    generate_btn.click(fn = predict_preference,inputs = [prompt_input],  
                                                       outputs = output_value)
 # Launch the Gradio interface
 PreferencePredictor.launch()
