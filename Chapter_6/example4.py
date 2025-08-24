@@ -27,14 +27,14 @@ print("DataFrame shape: " , data.shape)
 # Do Label Encoding
 from sklearn.preprocessing import LabelEncoder
 lb = LabelEncoder()
-objList data.select_dtypes(include = "object").columns
+objList = data.select_dtypes(include = "object").columns
 for obj in objList:
    data[obj] = lb.fit_transform(data[obj].astype(str))
 data.head()
 
 # Visualize bivariate relationships
-# !pip install -q plotly pandas
-# !pip install-U kaleido
+!pip install -q plotly pandas
+!pip install kaleido
 import plotly.express as px
 % matplotlib inline
 sns.color_palette("PiYG")
@@ -61,6 +61,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
                                     random_state = 42)
 
 # Fit Logistic Regression Model
+from sklearn.linear_model import LogisticRegression
 log_model = LogisticRegression()
 log_model.fit(X_train,y_train)
 y_pred1 = log_model.predict(X_test)
@@ -75,8 +76,8 @@ accuracy = accuracy_score(y_test, y_pred2)
 print('Accuracy for K Nearest Neighbor Model is',accuracy)
 
 # Fit KNN Model with 6 as the value of n_neighbors parameter
-Knn_best = KNeighborsClassifier(n_neighbors = 6)
-Knn_best.fit(X_train, y_train)
+knn_best = KNeighborsClassifier(n_neighbors = 6)
+knn_best.fit(X_train, y_train)
 # Calculate Accuracy
 y_pred_test = knn_best.predict(X_test)
 test_accuracy = accuracy_score(y_test, y_pred_test)
@@ -87,7 +88,7 @@ prediction = knn_best.predict([[1, 150, 70]])
 print(prediction)
 
 # Install Gradio Library
-# !pip install gradio -q
+!pip install gradio -q
 import gradio as gr
 # Define function to predict salary
 def predict_obesity(prompt1, prompt2, prompt3):
@@ -121,4 +122,5 @@ with gr.Blocks() as ObesityPredictor:
                            prompt_input2,prompt_input3],
                            outputs = output_value)
 # Launch the Gradio interface
+
 ObesityPredictor.launch()
