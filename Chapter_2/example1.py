@@ -17,8 +17,7 @@ intercept = lr.intercept_
 print(f"Regression Coefficient is: {regression_coefficient:5.2f} ")
 print(f"Intercept is: { intercept : 5.2f}" )
 print()
-print(f"Regression Equation is: Y = {regression_coefficient:5.2f} X
-                                             + {intercept : 5.2f}")
+print(f"Regression Equation is: Y = {regression_coefficient:5.2f} X + {intercept : 5.2f}")
 print()
 # Step 5: Do Prediction
 predicted_value = lr.predict([[11]])[0]
@@ -27,4 +26,5 @@ print()
 # Step 6: Visualize the Regression Line
 plt.scatter(X,Y,color = 'red')
 plt.plot(X,lr.predict(X), color = 'blue')
+
 plt.show()
