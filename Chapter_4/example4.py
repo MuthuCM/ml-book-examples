@@ -1,5 +1,6 @@
 # Example 4.4
 # Import the Packages
+! pip install mglearn
 import matplotlib.pyplot as plt
 import mglearn
 from sklearn.linear_model import Logisticregression
@@ -21,4 +22,5 @@ mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
 plt.title("Logistic Regression Classifier")
 plt.xlabel("Feature 0")
 plt.ylabel("Feature 1")
+
 plt.show()
