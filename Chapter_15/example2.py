@@ -1,0 +1,58 @@
+# Example 15.2
+# Dimensionality Reduction
+# Import the libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+share_prices_df = pd.read_csv ('dow_share_prices.csv', index_col = 0)
+missing_fractions = share_prices_df.isnull().mean().sort_values(ascending=False)     
+drop_list = sorted (list(missing_fractions [missing_fractions > 0.3].
+					                                      index))
+share_prices_df.drop(labels=drop_list, axis=1, inplace=True)
+# Fill the missing values with the last value available in the dataset
+share_prices_df = share_prices_df.fillna (method='ffill')
+# Drop the rows containing NA
+share_prices_df= share_prices_df.dropna(axis=0)
+share_prices_df.head(3)
+
+datareturns = share_prices_df.pct_change(1)
+datareturns = datareturns[datareturns.apply(lambda x : (x- x.mean())
+                  .abs() < (3*x.std()) ).all(1)]
+
+from sklearn.preprocessing import StandardScalar
+scaler = StandardScalar( ).fit(datareturns)
+rescaledDF = pd.DataFrame (scalar.fit_transform(datareturns),
+		         columns = datareturns.columns, index = datareturns.index)
+df.dropna (how='any', inplace = True)
+rescaledDF.dropna (how='any', inplace=True)
+# summarize transformed data
+datareturns.dropna(how='any', inplace=True)
+rescaledDF.dropna(how='any', inplace=True)
+rescaledDF.head(3)
+
+percentage 	= int(len(rescaledDF)*0.99)
+X_train	= rescaledDF [ :percentage ]
+X_test	= rescaledDF [ percentage: ]
+X_train_raw = datareturns[:percentage]
+X_test_raw = datareturns[percentage:]	
+stock_tickers	= rescaledDF.columns.values
+n_tickers 	= len (stock_tickers)
+
+pca = PCA( )
+PrincipalComponent = pca.fit(X_train)
+
+weights = pd.DataFrame()
+for i in range(len(pca.components_)):
+  weights["weights_{}".format(i)]= pca.components_[i] / sum(pca.components_[i])
+weights = weights.values.T
+
+NumPortfolios=2
+topPortfolios = pd.DataFrame(pca.components_[:NumPortfolios],
+                    columns=share_prices_df.columns)
+PCA_portfolios = topPortfolios.div(topPortfolios.sum(1), axis=0)
+PCA_portfolios.index = [f'Portfolio {i}' for i in range( NumPortfolios)]
+np.sqrt(pca.explained_variance_)
+PCA_portfolios.T.plot.bar(subplots=True, layout =(int(NumPortfolios),1),
+            figsize=(14,10), legend=False, sharey=True, ylim= (-1,1))
