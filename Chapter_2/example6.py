@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # Load the Dataset
 df = pd.read_csv ("insurance.csv")
-df-final = pd.get-dummies (df)
+df_final = pd.get-dummies (df)
 
 # Define independent variables and dependent variable
 y=df_final ["expenses"].values
@@ -39,4 +39,5 @@ Y = df_final ["expenses"].values
 regressor = LinearRegression( )
 regressor.fit (X,Y)
 y_hat = regressor.predict (X)
+
 print(r2_score (Y,Y_hat)) # 0.87
