@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load Data
-df = pd.read_csv("kyphosis.csv")
+df = pd.read_csv("Kyphosis.csv")
 
 # Do Label Encoding
 from sklearn.preprocessing import LabelEncoder
@@ -18,7 +18,7 @@ Y = df.iloc [:, 3].values
 
 # Splitting into Training and Testing Sets
 from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = traintest_split (X,Y,test-size=0.3)
+X_train, X_test, Y_train, Y_test = train_test_split (X,Y,test-size=0.3)
 
 # Fit KNN Classifier Model
 from sklearn.neighbors import KNeighborsClassifier
@@ -32,9 +32,9 @@ test_accuracy = []
 neighbors_range = range(1,11)
 for n_neighbors in neighbors_range:
    cr = KNeighborsClassifier(n_neighbors = n_neighbors)
-   cr.fit(X_train, y_train)
-   training_accuracy.append(cr.score(X_train, y_train))
-   test_accuracy.append(cr.score(X_test, y_test))
+   cr.fit(X_train, Y_train)
+   training_accuracy.append(cr.score(X_train, Y_train))
+   test_accuracy.append(cr.score(X_test, Y_test))
 plt.plot(neighbors_range, training_accuracy, label="Training Accuracy")
 plt.plot(neighbors_range, test_accuracy, label="Test Accuracy")
 plt.ylabel("Accuracy")
