@@ -15,23 +15,27 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
 dataset = pd.read_csv('waterQuality.csv')
-X = dataset.drop('is_safe', axis=1) 
+# Replace '#NUM!' with NaN and drop rows with NaN
+dataset = dataset.replace('#NUM!', np.nan)
+dataset.dropna(inplace=True)
+
+X = dataset.drop('is_safe', axis=1)
 y = dataset['is_safe']
-scaler = StandardScaler() 
+scaler = StandardScaler()
 X_standardized = scaler.fit_transform(X)
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X_standardized,  
+X_train, X_test, y_train, y_test = train_test_split(X_standardized,
                             y, test_size=0.2, random_state=42)
 
-pca = PCA(n_components=2) 
-X_train_pca = pca.fit_transform(X_train) 
+pca = PCA(n_components=2)
+X_train_pca = pca.fit_transform(X_train)
 X_test_pca = pca.transform(X_test)
-# Defining different Classification Models 
-models = { 
-   'Logistic Regression': LogisticRegression(random_state=42), 
-   'Decision Tree': DecisionTreeClassifier(random_state=42), 
-   'Random Forest': RandomForestClassifier(random_state=42), 
+# Defining different Classification Models
+models = {
+   'Logistic Regression': LogisticRegression(random_state=42),
+   'Decision Tree': DecisionTreeClassifier(random_state=42),
+   'Random Forest': RandomForestClassifier(random_state=42),
    'SVM': SVC(random_state=42)}
 
 # Function to train and evaluate the model 
@@ -45,5 +49,4 @@ def train_and_evaluate(X_train, X_test, y_train, y_test,
 for model_name, model in models.items(): 
    print(f"\n{model_name}:\n") 
    # Classification after PCA 
-   train_and_evaluate(X_train_pca, X_test_pca, y_train, y_test, model,  
-                                        f"{model_name} after PCA")
+   train_and_evaluate(X_train_pca, X_test_pca, y_train, y_test, model, f"{model_name} after PCA")
