@@ -39,7 +39,7 @@ ab_model.fit(X_train_scaled,y_train)
 # Do prediction with AdaBoost Regressor Model
 from sklearn.metrics import mean_squared_error, r2_score
 y_pred_ab = ab_model.predict(X_test_scaled)
-rmse_ab = mean_squared_error(y_test, y_pred_ab, squared=False)
+rmse_ab = np.sqrt(mean_squared_error(y_test, y_pred_ab))
 r2_ab = r2_score(y_test, y_pred_ab)
 print(f'AdaBoost - RMSE: {rmse_ab}, R²: {r2_ab}')
 # Fit GradientBoosting Regressor Model
@@ -51,7 +51,7 @@ gb_model.fit(X_train_scaled,y_train)
 # Do prediction with GradientBoosting Regressor Model
 from sklearn.metrics import mean_squared_error, r2_score
 y_pred_gb = gb_model.predict(X_test_scaled)
-rmse_gb = mean_squared_error(y_test, y_pred_gb, squared=False)
+rmse_gb = np.sqrt(mean_squared_error(y_test, y_pred_gb))
 r2_gb = r2_score(y_test, y_pred_gb)
 print(f'Gradient Boosting - RMSE: {rmse_gb}, R²: {r2_gb}')
 
