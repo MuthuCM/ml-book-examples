@@ -30,7 +30,8 @@ model = AdaBoostClassifier(n_estimators=100, random_state=42 )
 model.fit(x_train,y_train)
 
 # Calculate Accuracy
-from sklearn.metrics import fl_score
+from sklearn.metrics import f1_score
 y_pred = model.predict(x_test)
 accuracy = accuracy_score(y_test, y_pred)
+
 print(f"Model Accuracy: {accuracy:.2f}")
