@@ -17,7 +17,7 @@ df = pd.DataFrame (tr_arr, columns = tr.columns_)
 df
 
 # Applying Apriori
-from mlxtend.frequent_pattarns import apriori
+from mlxtend.frequent_patterns import apriori
 frequent_itemsets = apriori(df, min_support=0.6, use_colnames=True)
 frequent_itemsets
 
@@ -31,4 +31,5 @@ print (result)
 result.sort_values ("confidence", ascending = False)
 
 # Sort the Association Rules based on Lift
+
 result.sort_values ("lift", ascending=False)
