@@ -13,7 +13,7 @@ for column in cols:
 
 # Checking for Outliers
 cols = list(df)
-outliers = pd.DataFrame(columns=['Column','Number of Outliers'])
+outlier_data = []
 for column in cols:
    if column in df.select_dtypes(include = np.number).columns:
       q1 = df[column].quantile(0.25)
@@ -22,12 +22,13 @@ for column in cols:
       # third quartile (Q3)
       iqr = q3 - q1
       upper_limit = q3 + (1.5*iqr)
-      outliers = outliers.append(
-                  {'Column':column,'Number of Outliers':
-                    df.loc[(df[column] < lower_limit) |
-                          df[column] > upper_limit)].shape[0]}, ignore_index = True)
-                                                                                                  
-      print(outliers)
+      lower_limit = q1 - (1.5*iqr) # Define lower_limit
+      num_outliers = df.loc[(df[column] < lower_limit) | (df[column] > upper_limit)].shape[0]
+      outlier_data.append({'Column': column, 'Number of Outliers': num_outliers})
+
+outliers = pd.DataFrame(outlier_data)
+print(outliers)
+
 # Tackling Outliers through Winsorization
 from scipy.stats.mstats import winsorize
 cols = list(df)
@@ -42,13 +43,14 @@ class_percentages = (df['Category'].value_counts()
 print(class_percentages)
 
 from imblearn.over_sampling import SMOTE
-smote = SMOTE(kind = ‘regular’)
-X_sm, y_sm = smote.fit_sample(X[[‘concentration_score_1’,
-                     ‘concentration_score_2’, ‘concentration_score_3’,
-         ‘response_time_score_1’, ‘response_time_score_2’,
-         ‘response_time_score_3’, ‘response_time_score_4’,
-          ‘keep_cool_score_1’, ‘keep_cool_score_2’,
-          ‘keep_cool_score_3’]], y)
+smote = SMOTE()
+X_sm, y_sm = smote.fit_resample(df[['concentration_score_1',
+                     'concentration_score_2', 'concentration_score_3',
+         'response_time_score_1', 'response_time_score_2',
+         'response_time_score_3', 'response_time_score_4',
+          'keep_cool_score_1', 'keep_cool_score_2',
+          'keep_cool_score_3']], df['Category'])
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report,confusion_matrix
 model1 = LogisticRegression()
@@ -62,4 +64,5 @@ X = df.iloc[:, 0:-1]
 y = df.iloc[:, -1]
 model2.fit(X,y)
 y_pred = model2.predict(X)
+
 print(classification_report(y, y_pred))
