@@ -8,17 +8,28 @@ import seaborn as sns
 # Load Data
 df = sns.load_dataset("diamonds")
 
-#  Convert categorical variables to numerical variables
-df_final = pd.get_dummies (df)
+# Define numerical and categorical columns
+numerical_cols = ['carat', 'depth', 'table', 'x', 'y', 'z']
+categorical_cols = ['cut', 'color', 'clarity']
 
-# Define Independent and Dependent Variables
-y = df_final.price.values
-X = df_final.drop ("price", axis=1).values
+# Separate features and target variable
+X = df.drop("price", axis=1)
+y = df.price.values
 
-# Do Scaling of Data
-from sklearn.preprocessing import StandardScalar
-sc = StandardScalar( )
-X = sc.fit_transform (X)
+# Scale numerical features
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_numerical_scaled = sc.fit_transform(X[numerical_cols])
+X_numerical_scaled = pd.DataFrame(X_numerical_scaled, columns=numerical_cols)
+
+# One-hot encode categorical features
+X_categorical_encoded = pd.get_dummies(X[categorical_cols])
+
+# Concatenate scaled numerical and one-hot encoded categorical features
+X_processed = pd.concat([X_numerical_scaled, X_categorical_encoded], axis=1)
+
+# Update X to the processed features
+X = X_processed.values
 
 # Fit Random Forest Regressor Model
 from sklearn.ensemble import RandomForestRegressor
@@ -41,4 +52,5 @@ df1 = pd.DataFrame (dictionary1)
 X1 = df1_final.iloc[:, :].values
 X1 = sc.fit_transform(X1)
 predictedValues = regressor.predict(X1)
+
 print(predictedValues)
