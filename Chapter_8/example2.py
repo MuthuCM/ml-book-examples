@@ -13,7 +13,7 @@ for column in cols:
 
 # Checking for Outliers
 cols = list(df)
-outliers = pd.DataFrame(columns=['Column','Number of Outliers'])
+outlier_data = []
 for column in cols:
    if column in df.select_dtypes(include = np.number).columns:
       q1 = df[column].quantile(0.25)
@@ -22,9 +22,9 @@ for column in cols:
       # third quartile (Q3)
       iqr = q3 - q1
       upper_limit = q3 + (1.5*iqr)
-      outliers = outliers.append(
-                  {'Column':column,'Number of Outliers':
-                    df.loc[(df[column] < lower_limit) |
-                          df[column] > upper_limit)].shape[0]}, ignore_index = True)
-                                                                                                   
-      print(outliers)
+      lower_limit = q1 - (1.5*iqr) # Define lower_limit
+      num_outliers = df.loc[(df[column] < lower_limit) | (df[column] > upper_limit)].shape[0]
+      outlier_data.append({'Column': column, 'Number of Outliers': num_outliers})
+
+outliers = pd.DataFrame(outlier_data)
+print(outliers)
