@@ -38,9 +38,10 @@ dictionary1 = {'total_bill':[16.99, 10.34, 21.01, 23.68],
                'time':['Lunch','Dinner', 'Lunch', 'Dinner' ],
                'size':[2, 2, 4, 3]
                }			 
-df1 = pd.DataFrame(dictionary 1)
+df1 = pd.DataFrame(dictionary1)
 df1_final = pd.get_dummies(df1)
 X1 = df1_final.iloc [:,:].values
 X1 = sc.fit_transform (X1)
 predictedValue = regressor.predict (X1)
+
 print(predictedValue)
