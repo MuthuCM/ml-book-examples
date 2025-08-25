@@ -1,30 +1,41 @@
-# Example 8.3
+# Example 8.2
 # Load Packages
+import numpy as np
 import pandas as pd
-df = pd.read_csv('driving_test_measurements.csv')
-df.drop('User ID',axis=1,inplace=True)
-total = df.isnull().sum().sort_values(ascending = False)
-print(total)
-# Impute missing values of numeric data with mean
-cols = list(df)
-for column in cols:
-   if column in df.select_dtypes(include = np.number).columns:
-      df[column].fillna(df[column].mean(), inplace = True)
+import matplotlib.pyplot as plt
 
-# Checking for Outliers
-cols = list(df)
-outlier_data = []
-for column in cols:
-   if column in df.select_dtypes(include = np.number).columns:
-      q1 = df[column].quantile(0.25)
-      # first quartile (Q1)
-      q3 = df[column].quantile(0.75)
-      # third quartile (Q3)
-      iqr = q3 - q1
-      upper_limit = q3 + (1.5*iqr)
-      lower_limit = q1 - (1.5*iqr) # Define lower_limit
-      num_outliers = df.loc[(df[column] < lower_limit) | (df[column] > upper_limit)].shape[0]
-      outlier_data.append({'Column': column, 'Number of Outliers': num_outliers})
+# Load Data
+df = pd.read_csv ("working_hours.csv")
 
-outliers = pd.DataFrame(outlier_data)
-print(outliers)
+# Convert categorical variables to numerical variables
+df_final = pd.get_dummies (df)
+
+# Define Independent and Dependent Variables
+Y = df_final ["workHrs"].values
+X = df_final.drop ("workHrs", axis=1).values
+# Do Scaling of Data
+from sklearn.preprocessing import standardScaler
+sc = StandardScaler( )
+X = sc.fit_transform(X)
+
+# # Fit Decision Tree Classifier Model
+from sklearn.tree import DecisionTreeRegressor
+regressor = DecisionTreeRegressor (random_state = 0)
+regressor.fit(X,Y)
+
+# Calculate Accuracy
+from sklearn.metrics import r2_score
+y_pred = regressor.predict(X)
+print(y_pred)
+print (r2_score (Y, y_pred))
+
+# Do prediction with Decision Tree Classifier Model
+testInput	= {'dress' : ["Formal", "BCasual", "Casual"],
+	   'gender'    : ["male", "female", "male"]
+	  }		 
+df1	= pd.DataFrame (testInput)
+df1_final	= pd.get_dummies (df1)
+X1	= df1_final.iloc[:, :].values
+X1	= sc.fit_transform (X1)
+predictedValue	= regressor.predict (X1)
+print(predictedValue)
