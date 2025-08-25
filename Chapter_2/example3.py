@@ -37,29 +37,4 @@ plt.scatter(X,Y,color = 'red')
 plt.plot(X,lr.predict(X), color = 'blue')
 plt.show()
 
-# Install Gradio Library
-! pip install gradio -q
-import gradio as gr
-# Define function to predict salary
-def predict_salary(prompt):
-  model = 'Salary Prediction'   # Replace with the desired model name
-  input_value = int(prompt)
-  input_value = np.array([input_value]).reshape(-1, 1)    
-  predictedValue = regressor.predict(input_value)    
-  salary = int(predictedValue[0])    
-  return salary
-# Create Gradio interface
-with gr.Blocks() as SalaryPredictor:
-  gr.Markdown("## Salary Predictor")
-  prompt_input = gr.Textbox(label="Enter your Years of Experience", placeholder="e.g. 11")
-  style_input = gr.Dropdown(choices=["watercolor", "photorealistic",
-                                        "no style", "enhance", "anime"],
-                                        label="Choose a style"
-                                       )
-  output_value = gr.Textbox(label="Predicted Salary")
-  generate_btn = gr.Button("Predict Salary")
-  # Set the function to be called on button click
-  generate_btn.click(fn=predict_salary,inputs=[prompt_input], outputs=output_value)
 
-  # Launch the Gradio interface
-  SalaryPredictor.launch()
