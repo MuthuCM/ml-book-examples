@@ -1,43 +1,31 @@
-# Import the packages
-Import numpy as np
+# Example 2.6
+# Load Packages
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
-# Load the Dataset
-df = pd.read_csv ("insurance.csv")
-df_final = pd.get-dummies (df)
-
-# Define independent variables and dependent variable
-y=df_final ["expenses"].values
-x=df_final.drop ("expenses", axis=1).values
-
-# Fitting the Model & Calculating Accuracy
+# Load Data
+df = pd.read_csv ("Position_Salaries.csv")
+X = df.iloc [:, 1:2].values
+Y = df.iloc [:, 2].values
+# Fit Linear Regression Model
 from sklearn.linear_model import LinearRegression
-regressor = LinearRegression( )
-regressor.fit(X,Y)
-Y_bat = regressor.predict(X)
-print (r2_score(y, y_hat)) #0.75
-
-# Fitting the Model using OLS method
-import statsmodels.formula.api as smf
-results = smf.ols ('expenses ~ age + sex_male + bmi + children + smoker_yes + region_northwest + region_southeast + region_southwest', data = df_final).fit( )
-print(results.summary)
-
-# Adding Additional Terms
-df_final ['age2'] = df_final.age ** 2
-df_final ['bmi30'] = (df_final ['bmi'] >=30)*1
-df_final ['bmi30_smoker'] = (df_final['bmi'] >=30)* df_final.smoker_yes
-
-# Defining Independent Variables & Dependent Variable again
-X = df_final [['age', 'age2', 'children', 'bmi', 'sex_male',
-			   'bmi_30', 'smoker_yes', 'region_northwest',
-			   'region_southeast', 'region_southwest', 
-			   'bmi30_smoker']].values
-Y = df_final ["expenses"].values
-
-# Fitting Regression again & Checking Accuracy 
-regressor = LinearRegression( )
-regressor.fit (X,Y)
-y_hat = regressor.predict (X)
-
-print(r2_score (Y,Y_hat)) # 0.87
+lr = LinearRegression( ) 
+lr.fit(X,Y)
+# Fit Polynomial Regression Model
+from sklearn.preprocessing import PolynimialFeatures
+pr = PolynomialFeatures(degree = 4)
+X1 = pr.fit_transform(X)
+pr.fit(X1,Y)
+lr_2 = LinearRegression()
+lr_2.fit(X1,Y)
+# Visualize the Polynomial Regression relationship
+X_grid = np.arange(min(X), max(X), 0.1)
+X_grid = X_grid.reshape((len(X_grid), 1))
+plt.scatter(X, Y, color = 'red')
+plt.plot (X_grid, lr_2.predict(pr.fit_transform(X_grid)), color = 'blue')
+plt.title ("Polynomial regression") 
+plt.xlabel ("Position level")
+plt.ylabel ("Salary")
+plt.show( )
+# Do prediction with Polynomial Regression Model
+lr_2.predict(pr.fit_transform([[6.5]])
