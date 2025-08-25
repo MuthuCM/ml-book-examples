@@ -6,16 +6,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("Mall_Customers.csv")
+
+# Replace '?' with NaN and drop rows with NaN
+df.replace('?', np.nan, inplace=True)
+df.dropna(inplace=True)
+
 X = df.iloc[:, [3,4]].values
-from sklearn.preprocessing import StandardScalar
-sc = StandardScalar( )
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler( )
 X = sc.fit_transform(X)
 
 from sklearn.cluster import KMeans
 wcss = [ ]
 for i in range (1, 11):
    kmeans = KMeans (n_clusters=i, init='k-means++', random_state=0)
-   kmeans.fit(x)
+   kmeans.fit(X)
    wcss.append (kmeans.inertia_)
 plt.plot (range(1,11), wcss)
 plt.title ('The Elbow Method')
