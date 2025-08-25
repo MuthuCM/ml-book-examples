@@ -16,10 +16,9 @@ df = df[~df.isin(['?'])]
 # Drop rows with NaN values from DataFrame
 df = df.dropna(axis=0)
 df = df.apply(pd.to_numeric)
-
 # Define Independent and Dependent Variables
-X = df.drop(['class'],1).values
-y = data['class'].values
+X = df.drop(['class'], axis=1).values
+y = df['class'].values
 
 # Do Scaling of Data
 from sklearn.preprocessing import StandardScaler
@@ -30,7 +29,6 @@ X  = sc.fit_transform(X)
 from sklearn.neural_network import MLPClassifier
 classifier = MLPClassifier()
 classifier.fit(X, y)
-
 # Calculate Accuracy
 from sklearn.metrics import accuracy_score
 y_pred = classifier.predict(X)
@@ -41,4 +39,5 @@ inputdata = np.array([[63.0,1.0,1.0,145.0,233.0,1.0,2.0,
                                       150.0,0.0,2.3,3.0,0.0,6.0]])
 inputdata = inputdata.reshape(len(inputdata), -1)
 predictedValue = classifier.predict(inputdata)
+
 print(predictedValue)
