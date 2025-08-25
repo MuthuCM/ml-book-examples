@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScalar
 from sklearn.decomposition import PCA
 
 # Install quandl using "!pip install quandl"
-# !pip install quandl
+!pip install quandl
 import quandl
 #The API Key can be optained from Quandl website by registration
 quandl.ApiConfig.api_key = 'xZ2YZuFov1VMXphKmYZ_'
@@ -53,4 +53,5 @@ topPortfolios.index =[f'Principal Component {i}'
 axes = topPortfolios.T.plot.bar(subplots=True,
                                   legend=False,figsize=(14,10))
 plt.subplots_adjust(hspace=0.35)
+
 axes[0].set_ylim(0, .2)
