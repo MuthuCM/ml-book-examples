@@ -12,7 +12,7 @@ from sklearn.linear_model import LinearRegression
 lr = LinearRegression( ) 
 lr.fit(X,Y)
 # Fit Polynomial Regression Model
-from sklearn.preprocessing import PolynimialFeatures
+from sklearn.preprocessing import PolynomialFeatures
 pr = PolynomialFeatures(degree = 4)
 X1 = pr.fit_transform(X)
 pr.fit(X1,Y)
@@ -28,4 +28,5 @@ plt.xlabel ("Position level")
 plt.ylabel ("Salary")
 plt.show( )
 # Do prediction with Polynomial Regression Model
-lr_2.predict(pr.fit_transform([[6.5]])
+lr_2.predict(pr.fit_transform([[6.5]]))
+
