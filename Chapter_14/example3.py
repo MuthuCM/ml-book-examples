@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv("DriverData.csv")
 X = df.iloc[:, [2,3]].values
-from sklearn.preprocessing import StandardScalar
-sc = StandardScalar( )
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler( )
 X = sc.fit_transform(X)
 
 from sklearn.cluster import KMeans
@@ -21,10 +21,11 @@ plt.scatter(X[y_kmeans == 1, 0], X[y_kmeans == 1, 1], s = 100,
                                c = 'blue', label = 'Cluster 2')
 plt.scatter(X[y_kmeans == 2, 0], X[y_kmeans == 2, 1], s = 100,
                                c = 'green', label = 'Cluster 3')
-plt.scatter(kmeans.cluster_centers_[:,0], means.cluster_centers_ 
+plt.scatter(kmeans.cluster_centers_[:,0], kmeans.cluster_centers_ 
                [:, 1], s=300, c = 'yellow', label = 'Centroids')
 plt.title('Clusters of Drivers')
 plt.xlabel('Concentration Score (Score1)')
 plt.ylabel('Response Score (Score2)')
 plt.legend( )
+
 plt.show( )
