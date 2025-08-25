@@ -1,3 +1,4 @@
+# Example 2.5
 # Load Packages
 import numpy as np
 import pandas as pd
@@ -5,21 +6,13 @@ import matplotlib.pyplot as plt
 
 # Load Data
 df = pd.read_csv ("polynomial_values.csv")
-X = df.iloc [:, 0].values
+X = df.iloc [:, 0].values.reshape(-1, 1)
 Y = df.iloc [:, 1].values
 
 # Fit Linear Regression Model
 from sklearn.linear_model import LinearRegression
-lr = LinearRegression( ) 
+lr = LinearRegression( )
 lr.fit(X,Y)
-
-# Fit Polynomial Regression Model
-from sklearn.preprocessing import PolynimialFeatures
-pr = PolynomialFeatures(degree = 2)
-X1 = pr.fit_transform(X)
-pr.fit(X1,Y)
-lr_2 = LinearRegression()
-lr_2.fit(X1,Y)
 
 # Visualize the Polynomial Regression relationship
 X_grid = np.arange(min(X), max(X), 0.1)
@@ -30,6 +23,3 @@ plt.title ("Polynomial regression")
 plt.xlabel ("Position level")
 plt.ylabel ("Salary")
 plt.show( )
-
-# Do prediction with Polynomial Regression Model
-lr_2.predict(pr.fit_transform([[11]]))
