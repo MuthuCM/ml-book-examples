@@ -18,8 +18,7 @@ intercept = lr.intercept_
 print(f"Regression Coefficient =  {regression_coefficient:5.2f} ")
 print(f"Intercept is: { intercept : 5.2f}" )
 print()
-print(f"Regression Equation is: Y = {regression_coefficient:5.2f} X                        
-                                              + {intercept : 5.2f}")
+print(f"Regression Equation is: Y = {regression_coefficient:5.2f} X + {intercept : 5.2f}")
 print()
 # Do Prediction
 predicted_value = lr.predict([[11]])[0]
