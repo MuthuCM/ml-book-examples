@@ -1,4 +1,5 @@
 # Example 7.3
+! pip install mglearn
 # Load Packages
 import numpy as np
 import pandas as pd
@@ -43,5 +44,4 @@ df1_final = pd.get_dummies(df1)
 X1 = df1_final.iloc [:,:].values
 X1 = sc.fit_transform (X1)
 predictedValue = regressor.predict (X1)
-
-print(predictedValue)
+print(predictedValue) 
