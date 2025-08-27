@@ -30,11 +30,9 @@ print()
 testInput = [7,9,3]
 testInput = np.array (testInput)
 testInput = testInput.reshape (-1,1)
-predictedValues = regressor.predict(testInput)
+predictedValues = lr.predict(testInput)
 print (predictedValues)
 # Visualize the Regression Line
 plt.scatter(X,Y,color = 'red')
 plt.plot(X,lr.predict(X), color = 'blue')
 plt.show()
-
-
