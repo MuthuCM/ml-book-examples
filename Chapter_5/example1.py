@@ -1,3 +1,4 @@
+# Example 5.1
 # Predicting the variety of a flower
 # Load Pandas Package
 import pandas as pd
@@ -20,7 +21,6 @@ df['iris'] = labelEncoder.fit_transform(df['iris'])
 sns.heatmap(df.corr( ), annot = True)
 sns.pairplot(df, hue = 'iris', vars =
         ['sepal length', 'sepal width', 'petal length', 'petal width'])
-
 # Define independent and Dependent Variables
 X = df.drop(['iris'], axis = 1)
 Y = df['iris']
@@ -28,15 +28,14 @@ Y = df['iris']
 # Fit Logistic Regression Model
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression()
-classifier.fit(X, y)
+classifier.fit(X, Y)
 
 # Display the Confusion Matrix
 from sklearn.metrics import confusion_matrix, classification_report
 y_pred = classifier.predict(X)
-cm = confusion_matrix(y, y_pred)
+cm = confusion_matrix(Y, y_pred)
 print(cm)
-print(classification_report(y,y_pred))
-
+print(classification_report(Y,y_pred))
 # Make Prediction for a new flower(Setosa)
 inputdata = np.array([[5.1, 3.5, 1.4, 0.2]])
 inputdata = inputdata.reshape(len(inputdata), -1)
