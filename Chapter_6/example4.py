@@ -12,6 +12,7 @@ from sklearn.preprocessing import OneHotEncoder
 # Load Data
 data = pd.read_csv ("bmi.csv")
 data.head()
+
 data.info()
 
 # Perform Preprocessing
@@ -32,11 +33,15 @@ for obj in objList:
    data[obj] = lb.fit_transform(data[obj].astype(str))
 data.head()
 
-# Visualize bivariate relationships
 !pip install -q plotly pandas
+
 !pip install kaleido
+
+# Visualize bivariate relationships
+# !pip install -q plotly pandas
+# !pip install-U kaleido
 import plotly.express as px
-% matplotlib inline
+%matplotlib inline
 sns.color_palette("PiYG")
 sns.set_style("whitegrid")
 # Scatter Diagram
@@ -56,7 +61,8 @@ fig.show()
 X = data.drop('Index', axis = 1).values
 y = data['Index'].values
 # Splitting into Training and Testing Sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, 
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y,
                                     test_size = 0.2,
                                     random_state = 42)
 
@@ -87,8 +93,8 @@ print('Test Set Accuracy is', test_accuracy)
 prediction = knn_best.predict([[1, 150, 70]])
 print(prediction)
 
-# Install Gradio Library
 !pip install gradio -q
+
 import gradio as gr
 # Define function to predict salary
 def predict_obesity(prompt1, prompt2, prompt3):
@@ -104,6 +110,7 @@ def predict_obesity(prompt1, prompt2, prompt3):
    prediction = knn_best.predict([[input_value1,input_value2, input_value3]])
    obesity_status = int(prediction[0])
    return obesity_status
+
 # Create Gradio interface
 with gr.Blocks() as ObesityPredictor:
    gr.Markdown("## Obesity Predictor")
@@ -111,10 +118,10 @@ with gr.Blocks() as ObesityPredictor:
                               placeholder = "e.g. Male")
    prompt_input2 = gr.Textbox(label="Enter Your Height",
                               placeholder = "e.g. 174")
-   prompt_input3 = gr.Textbox(label="Enter Your Weight", 
+   prompt_input3 = gr.Textbox(label="Enter Your Weight",
                              placeholder = "e.g. 96")
-   style_input = gr.Dropdown(choices =["watercolor", "photorealistic"], 
-                              label = "Choose a style" ) 
+   style_input = gr.Dropdown(choices =["watercolor", "photorealistic"],
+                              label = "Choose a style" )
    output_value = gr.Textbox(label="Predicted Obesity Status")
    generate_btn = gr.Button("Predict Obesity Status")
    # Set the function to be called on button click
@@ -122,5 +129,6 @@ with gr.Blocks() as ObesityPredictor:
                            prompt_input2,prompt_input3],
                            outputs = output_value)
 # Launch the Gradio interface
-
 ObesityPredictor.launch()
+
+
