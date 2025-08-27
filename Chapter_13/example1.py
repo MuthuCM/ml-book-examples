@@ -18,6 +18,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import AdaBoostClassifier, GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
 #Libraries for Deep Learning Models
 from keras.models import Sequential
 from keras.layers import Dense
@@ -40,6 +41,7 @@ warnings.filterwarnings('ignore')
 dataset['loan_status'].value_counts(dropna=False)
 
 dataset = dataset.loc[dataset['loan_status'].isin(['Fully Paid', 'Charged Off'])]
+
 dataset['loan_status'].value_counts(dropna=False)
 
 dataset['loan_status'].value_counts(normalize=True, dropna=False)
@@ -55,6 +57,7 @@ drop_list = sorted(list(missing_fractions[missing_fractions > 0.3].index))
 print(drop_list)
 
 len(drop_list)
+
 dataset.drop(labels=drop_list, axis=1, inplace=True)
 dataset.shape
 
@@ -69,6 +72,7 @@ drop_list = [col for col in dataset.columns if col not in keep_list]
 dataset.drop(labels=drop_list, axis=1, inplace=True)
 
 dataset.shape
+
 # Identify and handle non-numeric columns for correlation calculation
 # The 'term' column is causing issues because it contains strings like ' 60 months'
 # Convert 'term' to numeric (months)
@@ -89,8 +93,10 @@ correlation_chargeOff.sort_values(ascending=False)
 
 drop_list_corr = sorted(list(correlation_chargeOff[correlation_chargeOff < 0.03].index))
 print(drop_list_corr)
+
 #Descriptive Statistics
 dataset.describe()
+
 #Ids are all unique and there are too many job titles and titles and zipcode,
 #these column is dropped The ID is not useful for modeling.
 dataset.drop(['emp_title','title','zip_code'], axis=1, inplace=True)
@@ -113,6 +119,7 @@ def emp_length_to_int(s):
         return np.int8(s.split()[0])
 
 dataset['emp_length'] = dataset['emp_length'].apply(emp_length_to_int)
+
 charge_off_rates = dataset.groupby('emp_length')['charged_off'].value_counts(normalize=True).loc[:,1]
 sns.barplot(x=charge_off_rates.index, y=charge_off_rates.values, color='#5975A4', saturation=1)
 
@@ -121,6 +128,7 @@ dataset.drop(['emp_length'], axis=1, inplace=True)
 charge_off_rates = dataset.groupby('sub_grade')['charged_off'].value_counts(normalize=True).loc[:,1]
 sns.set(rc={'figure.figsize':(12,5)})
 sns.barplot(x=charge_off_rates.index, y=charge_off_rates.values, color='#5975A4', saturation=1)
+
 dataset['earliest_cr_line'] = dataset['earliest_cr_line'].apply(lambda s: int(s[-4:]))
 
 dataset[['annual_inc']].describe()
@@ -135,6 +143,7 @@ dataset['fico_score'] = 0.5*dataset['fico_range_low'] + 0.5*dataset['fico_range_
 dataset.drop(['fico_range_high', 'fico_range_low'], axis=1, inplace=True)
 
 dataset['charged_off'].value_counts()
+
 # Categorical boolean mask
 categorical_feature_mask = dataset.dtypes==object
 # filter categorical columns using mask and turn it into a list
@@ -163,6 +172,7 @@ dataset.head()
 
 #Filling the NAs with the mean of the column.
 dataset.fillna(dataset.mean(),inplace = True)
+
 # split out validation dataset for the end
 Y= dataset["charged_off"]
 X = dataset.loc[:, dataset.columns != 'charged_off']
@@ -179,6 +189,7 @@ seed = 7
 #scoring ='precision'
 #scoring ='recall'
 scoring = 'roc_auc'
+
 # spot check the algorithms
 models = []
 models.append(('LR', LogisticRegression()))
@@ -195,6 +206,8 @@ models.append(('GBM', GradientBoostingClassifier()))
 # Bagging methods
 models.append(('RF', RandomForestClassifier()))
 models.append(('ET', ExtraTreesClassifier()))
+
+
 results = []
 names = []
 for name, model in models:
@@ -204,7 +217,8 @@ for name, model in models:
     names.append(name)
     msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
     print(msg)
-	# compare algorithms
+
+# compare algorithms
 fig = pyplot.figure()
 fig.suptitle('Algorithm Comparison')
 ax = fig.add_subplot(111)
@@ -212,17 +226,9 @@ pyplot.boxplot(results)
 ax.set_xticklabels(names)
 fig.set_size_inches(15,8)
 pyplot.show()
-# Grid Search: GradientBoosting Tuning
-'''
-n_estimators : int (default=100)
-    The number of boosting stages to perform.
-    Gradient boosting is fairly robust to over-fitting so a large number usually results in better performance.
-max_depth : integer, optional (default=3)
-    maximum depth of the individual regression estimators.
-    The maximum depth limits the number of nodes in the tree.
-    Tune this parameter for best performance; the best value depends on the interaction of the input variables.
 
-'''
+# Grid Search: GradientBoosting Tuning
+
 n_estimators = [20,180]
 max_depth= [3,5]
 param_grid = dict(n_estimators=n_estimators, max_depth=max_depth)
@@ -230,6 +236,7 @@ model = GradientBoostingClassifier()
 kfold = KFold(n_splits=num_folds, random_state=seed, shuffle=True)
 grid = GridSearchCV(estimator=model, param_grid=param_grid, scoring=scoring, cv=kfold)
 grid_result = grid.fit(X_train, Y_train)
+
 #Print Results
 print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
 means = grid_result.cv_results_['mean_test_score']
@@ -242,6 +249,7 @@ for mean, stdev, param, rank in zip(means, stds, params, ranks):
 # prepare model
 model = GradientBoostingClassifier(max_depth= 5, n_estimators= 180)
 model.fit(X_train, Y_train)
+
 # estimate accuracy on validation set
 predictions = model.predict(X_validation)
 print(accuracy_score(Y_validation, predictions))
