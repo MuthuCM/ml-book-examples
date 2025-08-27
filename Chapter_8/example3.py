@@ -34,7 +34,7 @@ from scipy.stats.mstats import winsorize
 cols = list(df)
 for col in cols:
    if col in df.select_dtypes(include=np.number).columns:
-     df[col] = winsorize(df[col],limits=    
+     df[col] = winsorize(df[col],limits=
                              [0.05, 0.1],inclusive=(True, True))
 
 # Checking for class Imbalance
@@ -64,5 +64,4 @@ X = df.iloc[:, 0:-1]
 y = df.iloc[:, -1]
 model2.fit(X,y)
 y_pred = model2.predict(X)
-
 print(classification_report(y, y_pred))
