@@ -17,10 +17,9 @@ classifier = LogisticRegression( )
 classifier.fit(X,y)
 
 # Calculate Accuracy
-#from sklearn.metrics import fl_score
+# from sklearn.metrics import f1_score
 y_pred = classifier.predict(X)
-print(sklearn.metrics.f1_score(y, y_pred, average='weighted'))
-
+print (sklearn.metrics.f1_score(y, y_pred, average='weighted'))
 # Do prediction with Logistic Regression Model
 testInput = {"Height":[174, 189, 185], "Weight":[96, 87, 110]}
 testData = pd.DataFrame(testInput)
@@ -28,4 +27,3 @@ X = testData.iloc [:,:].values
 X = sc.fit_transform (X)
 predictedValues = classifier.predict(X)
 print(predictedValues)
-print (predictedValues)
