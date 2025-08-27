@@ -1,4 +1,5 @@
 # Example 6.3
+# Example 6.3
 # Load Packages
 import numpy as np
 import pandas as pd
@@ -25,6 +26,5 @@ regressor = KNeighborsRegressor( )
 regressor.fit (X,Y)
 
 # Calculate Accuracy
-from sklearn.metrics import r2-score
-
-print (r2_score (Y, regressor.predict(x)))
+from sklearn.metrics import r2_score
+print (r2_score (Y, regressor.predict(X)))
