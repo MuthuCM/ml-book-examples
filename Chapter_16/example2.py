@@ -1,5 +1,4 @@
 # Example 16.2
-# Example 16.2 
 # importing module
 import pandas as pd
 # dataset
@@ -95,5 +94,4 @@ res.sort_values("confidence",ascending=False)
 
 # Sort by Lift
 res.sort_values("lift",ascending=False)
-
 
