@@ -16,5 +16,5 @@ dendrogram =sch.dendrogram (sch.linkage (X, method='ward'))
 plt.title ('Dendrogram')
 plt.xlabel ('Customers')
 plt.ylabel ('Euclidean Distances')
-
 plt.show ( )
+
