@@ -19,6 +19,8 @@ X = sc.fit_transform(X)
 # Split into Training and Testing Sets
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 0)
+
+
 # Fit various Classifier Models
 from sklearn.linear_model       import LogisticRegression
 from sklearn.tree       import DecisionTreeClassifier
@@ -44,6 +46,7 @@ classifier6.fit(X_train, Y_train)
 classifier7.fit(X_train, Y_train)
 classifier8.fit(X_train, Y_train)
 classifier9.fit(X_train, Y_train)
+
 # Calculate Accuracy
 from sklearn.metrics import f1_score
 print (f1_score (Y_test, classifier1.predict (X_test)))
@@ -65,5 +68,3 @@ X1 = df1.iloc[:, :].values
 X1 = sc.fit_transform(X1)
 predictedValue4 = classifier4.predict(X1)
 print(predictedValue4)
-
-
