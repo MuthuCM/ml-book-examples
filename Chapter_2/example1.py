@@ -1,4 +1,5 @@
-# Simple Linear Regression 
+# Example 2.1
+# Simple Linear Regression
 # Step 1: Import the Libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,5 +27,4 @@ print()
 # Step 6: Visualize the Regression Line
 plt.scatter(X,Y,color = 'red')
 plt.plot(X,lr.predict(X), color = 'blue')
-
 plt.show()
