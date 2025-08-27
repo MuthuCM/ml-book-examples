@@ -39,18 +39,40 @@ regressor.fit (X,y)
 # Do prediction with Random Forest Regressor Model
 from sklearn.metrics import r2_score
 print (r2_score (y,regressor.predict(X)))
-dictionary1 = { 'carat' : [0.21,0.25,0.27,0.29,0.22,0.24,0.26,0.28],   
-                       'color': ['D','E','F','G','H','I','J','D'], 
-                 'clarity' : ['IF','VVS1','VVS2','VS1','VS2','SI1','SI2','I1'], 
-                 'depth' : [58.0,58.3,59.6,59.9,60.2,60.5,60.8,61.1],
-                'table' : [55.0,56.0,57.0,58.0,59.0,60.0,61.0,62.0],
-                'x' :[3.90,3.93,3.99,4.02,4.05,4.08,4.11,4.14],
-                'y':[3.91,3.92,3.98,4.03,4.04,4.09,4.10,4.15],
-                'z' :[2.20,2.24,2.28,2.32,2.36,2.40,2.44,2.48],
-      'cut':['Ideal','Premium','Good','VeryGood','Fair','Ideal','Premium','Good']}
+dictionary1 = { 'carat' : [0.21,0.25,0.27,0.29,0.22,0.24,0.26,0.28],
+                       'color': ['D','E','F','G','H','I','J','D'],
+                       'clarity' : ['IF','VVS1','VVS2','VS1','VS2','SI1','SI2','I1'],
+                       'depth' : [58.0,58.3,59.6,59.9,60.2,60.5,60.8,61.1],
+                       'table' : [55.0,56.0,57.0,58.0,59.0,60.0,61.0,62.0],
+                       'x' :[3.90,3.93,3.99,4.02,4.05,4.08,4.11,4.14],
+                       'y':[3.91,3.92,3.98,4.03,4.04,4.09,4.10,4.15],
+                       'z' :[2.20,2.24,2.28,2.32,2.36,2.40,2.44,2.48],
+                       'cut':['Ideal','Premium','Good','VeryGood','Fair','Ideal','Premium','Good']}
 df1 = pd.DataFrame (dictionary1)
-X1 = df1_final.iloc[:, :].values
-X1 = sc.fit_transform(X1)
-predictedValues = regressor.predict(X1)
 
+# Separate numerical and categorical columns in test data
+numerical_cols_test = ['carat', 'depth', 'table', 'x', 'y', 'z']
+categorical_cols_test = ['color', 'clarity', 'cut']
+
+# Scale numerical features of test data
+X1_numerical = sc.transform(df1[numerical_cols_test])
+X1_numerical_scaled = pd.DataFrame(X1_numerical, columns=numerical_cols_test)
+
+# One-hot encode categorical features of test data
+X1_categorical = pd.get_dummies(df1[categorical_cols_test])
+
+# Concatenate scaled numerical and one-hot encoded categorical features
+X1_processed = pd.concat([X1_numerical_scaled, X1_categorical], axis=1)
+
+# Align columns with training data columns after get_dummies
+# Drop 'price' from df_final columns as it's the target variable
+df_final_features = df_final.drop('price', axis=1)
+missing_cols_test = set(df_final_features.columns) - set(X1_processed.columns)
+for c in missing_cols_test:
+    X1_processed[c] = 0
+# Ensure the order of columns is the same as in training data
+X1_processed = X1_processed[df_final_features.columns]
+
+
+predictedValues = regressor.predict (X1_processed)
 print(predictedValues)
