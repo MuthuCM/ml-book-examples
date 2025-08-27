@@ -1,4 +1,5 @@
 # Example 16.1
+# Example 16.1
 # Association Rule Mining - Apriori Method
 # Load Packages
 import pandas as pd
@@ -21,7 +22,7 @@ from mlxtend.frequent_patterns import apriori
 frequent_itemsets = apriori(df, min_support=0.6, use_colnames=True)
 frequent_itemsets
 
-# Displaying Association Rules 
+# Displaying Association Rules
 from mlxtend.frequent_patterns import association_rules
 result = association_rules (frequent_itemsets, metric='lift',
                             min_threshold=1)
@@ -31,5 +32,4 @@ print (result)
 result.sort_values ("confidence", ascending = False)
 
 # Sort the Association Rules based on Lift
-
 result.sort_values ("lift", ascending=False)
