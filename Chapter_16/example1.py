@@ -1,5 +1,4 @@
 # Example 16.1
-# Example 16.1
 # Association Rule Mining - Apriori Method
 # Load Packages
 import pandas as pd
@@ -33,3 +32,4 @@ result.sort_values ("confidence", ascending = False)
 
 # Sort the Association Rules based on Lift
 result.sort_values ("lift", ascending=False)
+
