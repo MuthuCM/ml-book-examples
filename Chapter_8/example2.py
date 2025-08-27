@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 # Load Data
 df = pd.read_csv ("working_hours.csv")
+
 # Convert categorical variables to numerical variables
 df_final = pd.get_dummies (df)
 
