@@ -18,7 +18,7 @@ Y = df.iloc [:, 3].values
 
 # Splitting into Training and Testing Sets
 from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split (X,Y,test-size=0.3)
+X_train, X_test, Y_train, Y_test = train_test_split (X,Y,test_size=0.3)
 
 # Fit KNN Classifier Model
 from sklearn.neighbors import KNeighborsClassifier
@@ -40,6 +40,7 @@ plt.plot(neighbors_range, test_accuracy, label="Test Accuracy")
 plt.ylabel("Accuracy")
 plt.xlabel("n_neighbors")
 plt.legend()
+
 input_data = np.array ([[61, 2, 17]])
 input_data = input_data.reshape (len (input_data), -1)
 predicted_value = classifier.predict (input_data)
