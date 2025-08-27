@@ -1,4 +1,5 @@
 # Example 8.1
+!pip install mglearn
 # Load Packages
 import numpy as np
 import pandas as pd
@@ -22,16 +23,16 @@ classifier = DecisionTreeClassifier( )
 classifier.fit (X,Y)
 
 # Calculate Accuracy
-from sklearn.metrics import fl_score
+from sklearn.metrics import f1_score
 y_pred = classifier.predict(X)
-print ("F-Score: ", fl_score(y, y_pred, average='weighted'))
+print ("F-Score: ", f1_score(y, y_pred, average='weighted'))
 
 # Do Prediction
-testInput	= {"Height": [174,189, 185], "Weight" : [96, 87, 110]}
-testData  	= pd.DataFrame (testInput)
-X1        	= testData.iloc [:, :].values
-X1        	= sc.fit_transform (X1)
-predictedValue 	= classifier.predict (X1)
+testInput       = {"Height": [174,189, 185], "Weight" : [96, 87, 110]}
+testData        = pd.DataFrame (testInput)
+X1              = testData.iloc [:, :].values
+X1              = sc.fit_transform (X1)
+predictedValue  = classifier.predict (X1)
 print (predictedValue)
 
 # Visualize the Decision Tree
@@ -49,3 +50,4 @@ import graphviz
 with open("tree.dot") as f:
    dot_graph = f.read()
    display(graphviz.Source(dot_graph))
+
