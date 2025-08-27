@@ -28,5 +28,4 @@ mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
 plt.title("KNN Classifier")
 plt.xlabel("Feature 0")
 plt.ylabel("Feature 1")
-
 plt.show()
