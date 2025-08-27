@@ -11,7 +11,7 @@ data = pd.read_table(file, sep = ',', index_col= None)
 data = data.drop(['result', 'age_desc'], axis=1)
 
 # Define Independent and Dependent Variables
-x = data.iloc[:, 0:-1] 
+x = data.iloc[:, 0:-1]
 y = data.iloc[:, -1]
 X = pd.get_dummies(x)
 X.columns.values
