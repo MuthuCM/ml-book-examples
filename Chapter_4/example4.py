@@ -1,9 +1,11 @@
 # Example 4.4
-# Import the Packages
+# Example 4.4
 ! pip install mglearn
+! pip install scikit-learn
+# Import the Packages
 import matplotlib.pyplot as plt
 import mglearn
-from sklearn.linear_model import Logisticregression
+from sklearn.linear_model import LogisticRegression
 
 # Load the data
 X, y = mglearn.datasets.make_forge()
@@ -22,6 +24,4 @@ mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
 plt.title("Logistic Regression Classifier")
 plt.xlabel("Feature 0")
 plt.ylabel("Feature 1")
-
 plt.show()
-
